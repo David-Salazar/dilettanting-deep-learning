@@ -4,7 +4,7 @@ title: About Me
 permalink: /about/
 ---
 
-This is where you put the contents of your *About* page. Like all your pages, it's in [Markdown](https://guides.github.com/features/mastering-markdown/) format.
+Professional dilettan'er. I have fun with multiplying random numbers over and over again. See my [twitter](https://twitter.com/DavidSalazarVir) or my other [blog](https://david-salazar.github.io/post/) where I have fun with R. 
 
 This website is powered by **[fastpages](https://github.com/fastai/fastpages)** [^1].
 
