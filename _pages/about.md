@@ -4,7 +4,7 @@ title: About Me
 permalink: /about/
 ---
 
-Professional dilettan'er. I have fun with multiplying random numbers over and over again. See my [twitter](https://twitter.com/DavidSalazarVir) or my other [blog](https://david-salazar.github.io/post/) where I have fun with R. 
+Professional dilettan'er. I have fun multiplying random numbers over and over again. See my [twitter](https://twitter.com/DavidSalazarVir) or my other [blog](https://david-salazar.github.io/post/) where I have fun with R. 
 
 This website is powered by **[fastpages](https://github.com/fastai/fastpages)** [^1].
 
