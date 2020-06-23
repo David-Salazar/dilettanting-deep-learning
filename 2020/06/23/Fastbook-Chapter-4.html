@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>fast.ai Chapter 4 | Dilettanting Deep Learning</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="fast.ai Chapter 4" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Having fun with deep learning" />
+<meta property="og:description" content="Having fun with deep learning" />
+<link rel="canonical" href="https://david-salazar.github.io/dilettanting-deep-learning/2020/06/23/Fastbook-Chapter-4.html" />
+<meta property="og:url" content="https://david-salazar.github.io/dilettanting-deep-learning/2020/06/23/Fastbook-Chapter-4.html" />
+<meta property="og:site_name" content="Dilettanting Deep Learning" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-06-23T00:00:00-05:00" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"https://david-salazar.github.io/dilettanting-deep-learning/2020/06/23/Fastbook-Chapter-4.html"},"description":"Having fun with deep learning","@type":"BlogPosting","url":"https://david-salazar.github.io/dilettanting-deep-learning/2020/06/23/Fastbook-Chapter-4.html","headline":"fast.ai Chapter 4","dateModified":"2020-06-23T00:00:00-05:00","datePublished":"2020-06-23T00:00:00-05:00","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/dilettanting-deep-learning/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://david-salazar.github.io/dilettanting-deep-learning/feed.xml" title="Dilettanting Deep Learning" /><link rel="shortcut icon" type="image/x-icon" href="/dilettanting-deep-learning/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>fast.ai Chapter 4 | Dilettanting Deep Learning</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="fast.ai Chapter 4" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Having fun with deep learning" />
+<meta property="og:description" content="Having fun with deep learning" />
+<link rel="canonical" href="https://david-salazar.github.io/dilettanting-deep-learning/2020/06/23/Fastbook-Chapter-4.html" />
+<meta property="og:url" content="https://david-salazar.github.io/dilettanting-deep-learning/2020/06/23/Fastbook-Chapter-4.html" />
+<meta property="og:site_name" content="Dilettanting Deep Learning" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-06-23T00:00:00-05:00" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"https://david-salazar.github.io/dilettanting-deep-learning/2020/06/23/Fastbook-Chapter-4.html"},"description":"Having fun with deep learning","@type":"BlogPosting","url":"https://david-salazar.github.io/dilettanting-deep-learning/2020/06/23/Fastbook-Chapter-4.html","headline":"fast.ai Chapter 4","dateModified":"2020-06-23T00:00:00-05:00","datePublished":"2020-06-23T00:00:00-05:00","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://david-salazar.github.io/dilettanting-deep-learning/feed.xml" title="Dilettanting Deep Learning" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head><body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/dilettanting-deep-learning/">Dilettanting Deep Learning</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/dilettanting-deep-learning/about/">About Me</a><a class="page-link" href="/dilettanting-deep-learning/search/">Search</a><a class="page-link" href="/dilettanting-deep-learning/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">fast.ai Chapter 4</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-06-23T00:00:00-05:00" itemprop="datePublished">
+        Jun 23, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      3 min read
+    
+</span></p>
+
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/David-Salazar/dilettanting-deep-learning/tree/master/_notebooks/2020-06-23-Fastbook-Chapter-4.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/dilettanting-deep-learning/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/David-Salazar/dilettanting-deep-learning/master?filepath=_notebooks%2F2020-06-23-Fastbook-Chapter-4.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/dilettanting-deep-learning/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/David-Salazar/dilettanting-deep-learning/blob/master/_notebooks/2020-06-23-Fastbook-Chapter-4.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/dilettanting-deep-learning/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2020-06-23-Fastbook-Chapter-4.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="n">untar_data</span><span class="p">(</span><span class="n">URLs</span><span class="o">.</span><span class="n">MNIST_SAMPLE</span><span class="p">)</span>
+<span class="n">Path</span><span class="o">.</span><span class="n">BASE_PATH</span> <span class="o">=</span> <span class="n">path</span>
+<span class="n">threes</span> <span class="o">=</span> <span class="p">(</span><span class="n">path</span><span class="o">/</span><span class="s1">&#39;train&#39;</span><span class="o">/</span><span class="s1">&#39;3&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">ls</span><span class="p">()</span><span class="o">.</span><span class="n">sorted</span><span class="p">()</span>
+<span class="n">sevens</span> <span class="o">=</span> <span class="p">(</span><span class="n">path</span><span class="o">/</span><span class="s1">&#39;train&#39;</span><span class="o">/</span><span class="s1">&#39;7&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">ls</span><span class="p">()</span><span class="o">.</span><span class="n">sorted</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now we can read each image and then convert it to a tensor:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">seven_tensors</span> <span class="o">=</span> <span class="p">[</span><span class="n">tensor</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">o</span><span class="p">))</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">sevens</span><span class="p">]</span>
+<span class="n">three_tensors</span> <span class="o">=</span> <span class="p">[</span><span class="n">tensor</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">o</span><span class="p">))</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">threes</span><span class="p">]</span>
+
+<span class="n">valid_3_tens</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">tensor</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">o</span><span class="p">))</span> 
+                            <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="p">(</span><span class="n">path</span><span class="o">/</span><span class="s1">&#39;valid&#39;</span><span class="o">/</span><span class="s1">&#39;3&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">ls</span><span class="p">()])</span>
+
+<span class="n">valid_7_tens</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">tensor</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">o</span><span class="p">))</span> 
+                            <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="p">(</span><span class="n">path</span><span class="o">/</span><span class="s1">&#39;valid&#39;</span><span class="o">/</span><span class="s1">&#39;7&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">ls</span><span class="p">()])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We normalize the pixels by dividing them by 255:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">stacked_sevens</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">seven_tensors</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">/</span><span class="mi">255</span>
+<span class="n">stacked_threes</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">three_tensors</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">/</span><span class="mi">255</span>
+
+<span class="n">valid_3_tens</span> <span class="o">=</span> <span class="n">valid_3_tens</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">/</span><span class="mi">255</span>
+<span class="n">valid_7_tens</span> <span class="o">=</span> <span class="n">valid_7_tens</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">/</span><span class="mi">255</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can then put all of the training images on a rank 2 tensor:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">stacked_threes</span><span class="p">,</span> <span class="n">stacked_sevens</span><span class="p">])</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="o">*</span><span class="mi">28</span><span class="p">)</span>
+<span class="n">valid_x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">valid_3_tens</span><span class="p">,</span> <span class="n">valid_7_tens</span><span class="p">])</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="o">*</span><span class="mi">28</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For the labels, we put them in a column vector:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_y</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">threes</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">sevens</span><span class="p">))</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">valid_y</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">valid_3_tens</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">valid_7_tens</span><span class="p">))</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Finally, we put both of these tensors in the dataLoaders:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dset</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">train_x</span><span class="p">,</span><span class="n">train_y</span><span class="p">))</span>
+<span class="n">dl</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>
+
+<span class="n">valid_dset</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">valid_x</span><span class="p">,</span><span class="n">valid_y</span><span class="p">))</span>
+<span class="n">valid_dl</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">valid_dset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>
+
+<span class="n">dls</span> <span class="o">=</span> <span class="n">DataLoaders</span><span class="p">(</span><span class="n">dl</span><span class="p">,</span> <span class="n">valid_dl</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Create-the-model">Create the model<a class="anchor-link" href="#Create-the-model"> </a></h3><p>Remember: a neural network is just a composition of a linear function and some activation function: many times over.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">simple_net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">28</span><span class="o">*</span><span class="mi">28</span><span class="p">,</span><span class="mi">30</span><span class="p">),</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">Sigmoid</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Create-the-optimization-function">Create the optimization function<a class="anchor-link" href="#Create-the-optimization-function"> </a></h3><p><code>fastai</code> already comes with its own <code>SGD</code> optimizer:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">SGD</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;function fastai2.optimizer.SGD(params, lr, mom=0.0, wd=0.0, decouple_wd=True)&gt;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Loss-function">Loss function<a class="anchor-link" href="#Loss-function"> </a></h3><p><code>pytorch</code> already has an implementation of the cross entropy loss function that we use in binary classification problems:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nn</span><span class="o">.</span><span class="n">BCELoss</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>BCELoss()</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Metrics-to-print">Metrics to print<a class="anchor-link" href="#Metrics-to-print"> </a></h3><p>We will print the accuracy on the validation set</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Putting-it-all-together-in-the-learner">Putting it all together in the learner<a class="anchor-link" href="#Putting-it-all-together-in-the-learner"> </a></h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Learner</span><span class="p">():</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataloaders</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">opt</span><span class="p">,</span> <span class="n">loss</span><span class="p">):</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">train_dl</span> <span class="o">=</span> <span class="n">dataloaders</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">valid_dl</span> <span class="o">=</span> <span class="n">dataloaders</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">opt</span> <span class="o">=</span> <span class="n">opt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loss</span> <span class="o">=</span> <span class="n">loss</span>
+        
+    <span class="k">def</span> <span class="nf">batch_accuracy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preds</span><span class="p">,</span> <span class="n">yb</span><span class="p">):</span>
+        
+        <span class="n">correct</span> <span class="o">=</span> <span class="p">(</span><span class="n">preds</span><span class="o">&gt;</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">==</span> <span class="n">yb</span>
+        <span class="k">return</span> <span class="n">correct</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+        
+    <span class="k">def</span> <span class="nf">validate_epoch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        
+        <span class="n">accs</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_accuracy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">xb</span><span class="p">),</span> <span class="n">yb</span><span class="p">)</span> <span class="k">for</span> <span class="n">xb</span><span class="p">,</span><span class="n">yb</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_dl</span><span class="p">]</span>
+        <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">accs</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="mi">4</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">train_epoch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        
+        <span class="k">for</span> <span class="n">xb</span><span class="p">,</span><span class="n">yb</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_dl</span><span class="p">:</span>
+            <span class="n">preds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">xb</span><span class="p">)</span>
+            <span class="n">calculated_loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">yb</span><span class="o">*</span><span class="mf">1.0</span><span class="p">)</span>
+            <span class="n">calculated_loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">opt</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">opt</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+                
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        
+        <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">train_epoch</span><span class="p">()</span>
+            <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">validate_epoch</span><span class="p">(),</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Taking-our-learner-for-a-spin">Taking our learner for a spin<a class="anchor-link" href="#Taking-our-learner-for-a-spin"> </a></h2><p>We can train test our learner on the data for 3's and 7's:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">simple_net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">28</span><span class="o">*</span><span class="mi">28</span><span class="p">,</span><span class="mi">30</span><span class="p">),</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">Sigmoid</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">example</span> <span class="o">=</span> <span class="n">Learner</span><span class="p">(</span><span class="n">dls</span><span class="p">,</span> <span class="n">simple_net</span><span class="p">,</span> <span class="n">SGD</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">BCELoss</span><span class="p">())</span>
+<span class="n">example</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="mi">40</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>0.5068 0.7793 0.9033 0.9297 0.9434 0.9516 0.9565 0.9599 0.9653 0.9658 0.9658 0.9678 0.9687 0.9692 0.9697 0.9707 0.9721 0.9726 0.9731 0.9736 0.9741 0.9746 0.9741 0.9746 0.9751 0.9756 0.9761 0.9765 0.977 0.9765 0.9775 0.978 0.978 0.978 0.978 0.978 0.978 0.979 0.9795 0.9799 </pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Second-Research-Question">Second Research Question<a class="anchor-link" href="#Second-Research-Question"> </a></h2><blockquote><p>Complete all the steps in this chapter using the full MNIST datasets (that is, for all digits, not just 3s and 7s). This is a significant project and will take you quite a bit of time to complete! You'll need to do some of your own research to figure out how to overcome some obstacles you'll meet on the way.</p>
+</blockquote>
+<h3 id="Getting-the-data">Getting the data<a class="anchor-link" href="#Getting-the-data"> </a></h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="n">untar_data</span><span class="p">(</span><span class="n">URLs</span><span class="o">.</span><span class="n">MNIST</span><span class="p">)</span>
+<span class="n">path</span><span class="o">.</span><span class="n">ls</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(#2) [Path(&#39;C:/Users/57319/.fastai/data/mnist_png/testing&#39;),Path(&#39;C:/Users/57319/.fastai/data/mnist_png/training&#39;)]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can use the <code>DataBlock</code> API to read both the train and test folders.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mnist</span> <span class="o">=</span> <span class="n">DataBlock</span><span class="p">(</span><span class="n">blocks</span><span class="o">=</span><span class="p">(</span><span class="n">ImageBlock</span><span class="p">(</span><span class="bp">cls</span><span class="o">=</span><span class="n">PILImageBW</span><span class="p">),</span> <span class="n">CategoryBlock</span><span class="p">),</span> 
+                  <span class="n">get_items</span><span class="o">=</span><span class="n">get_image_files</span><span class="p">,</span> 
+                  <span class="n">splitter</span><span class="o">=</span><span class="n">GrandparentSplitter</span><span class="p">(</span><span class="n">train_name</span><span class="o">=</span><span class="s1">&#39;training&#39;</span><span class="p">,</span> <span class="n">valid_name</span><span class="o">=</span><span class="s1">&#39;testing&#39;</span><span class="p">),</span>
+                  <span class="n">get_y</span><span class="o">=</span><span class="n">parent_label</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dls</span> <span class="o">=</span> <span class="n">mnist</span><span class="o">.</span><span class="n">dataloaders</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">num_workers</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dls</span><span class="o">.</span><span class="n">show_batch</span><span class="p">(</span><span class="n">max_n</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOsAAAD4CAYAAAANSBHgAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAADh0RVh0U29mdHdhcmUAbWF0cGxvdGxpYiB2ZXJzaW9uMy4xLjMsIGh0dHA6Ly9tYXRwbG90bGliLm9yZy+AADFEAAAfj0lEQVR4nO2de7xWU/rAv6uG7qkm6WJ0M5NJiOlKki6kMqZcooipkS5q/IhJkVBKhdJFmEbRRSJjIgk1iqLBdB01FV003URXXVT798fp2Xu/l3POe97zvu/ey3m+n0+f1llrv3uvs85e77PWc1vGcRwURQk/hYLugKIoiaGTVVEsQSeroliCTlZFsQSdrIpiCTpZFcUSdLIqiiWEcrIaY8obY54zxvzPGHPUGPONMaZH0P2yCWNMc2PMCWPMhqD7YgPGmDbGmOWn3rdNxph7g+5TNL8IugPRGGNKAouAbcAtwGagEnBakP2yCWPMWcAU4H3g3IC7E3qMMfWAt4CnyHrnGgITjTE/Oo4zMdDO+TBh82AyxjwK3A7UchznaND9sQ1jTCFgPvABUBS41XEcnbA5YIyZDlRzHOdSX91I4AbHcaoH17NIwrgMvh74GHjGGLPdGLPWGDPSGFM86I5ZwsOAA4wIuiMWcRkwL6puHlDNGHN2AP2JS+iWwUBNspZuM4FrgcrAuFP/dw6wX6HHGHMl0AO42HGck8aYoLtkC5WAHVF1O3xt32a2O/EJ42QtBHwHdHMc5ziAMeZ0YJYxpo/jON8H2ruQYowpD0wFujqOE/3iKckTmn1iGCfrdmCTTNRTrDn1f1VAJ2t86pC1+pjjk6iFAGOMOQ50cRxnelCdCznbgYpRdWed+j80X3xh3LMuBmoaYwr76mqd+n9T5rtjDf8CLgDq+v5NBLaeKr8TXNdCzyfA1VF1rYHNjuOEYgkM4ZSso4CbgHHGmNFkSYtRwMuO4/wQaM9CjOM4h4DV/jpjzC7gmOM4q+N/SjnFM8ASY8xQ4BWgAdAH+L9AexVF6CSr4zgrgDZAPWAF8BLwJtAzyH4pP18cx/kX8AegHVnv3OPAwDDZWCGEdlZFUeITOsmqKEp8dLIqiiXoZFUUS9DJqiiWkJvppqBrn/Ljr6djlzw6dnFQyaoolqCTVVEsQSeroliCTlZFsQSdrIpiCTpZFcUSMh51s2XLFgAeffRRAH79618D8Oc//9m9plixYpnulqKEHpWsimIJuUXdpNw4XblyZQB27IgMwJ87d65bbt26daofmyxq2E8ea8du+PDhAAwcONCtO3nyJACFCmXJt6lTpwJwyy23pKML6hShKDaTccl61llZqW12794dUd+jh5dwf8KECal+bLJYKx1CgLVjV7hwVkYhkaIQK1l/+umndHZBJaui2IxOVkWxhNAkTLvsssuC7sLPAlmuHThwAIAzzjgjX/ebOXOmW7755psB2LRpEwBVq1bN173DwNKlS93y448/DoBsDWUs49XJ584//3z3mtKlS6e1rypZFcUSMqJgevfdd91yu3btsm4c9dydO3e65TPPPDMVj00F1ilJxOwwcuRIAO655x63rWfPrASR5cuXT/h+nTp1cssiZbt06QLASy+9lNNHrRg7USaBpzyKVibFq5Ofr7nmGveat99+O1XdUgWTothMRvasH374oVvW1KepQ8by448/duuee+45APbu3QvA4MGD3baKFbNOiLjzzjtzvbdIjqJFi7p1556bdXKkSFYbWbJkCQBDhgwBIt9H+Z0T2bPKz/5V49dffw1AjRo10tJ3layKYgk6WRXFEjKiYPKrtA8ePBj3GlUw5Z0ZM2YAcOutt2Z7TdmyZd3ysmXLgJyXabKUE9/XSZMmuW3PPvssANddd10i3Qvl2EV7J/mXutF1oqwDb9kr/sLxlFDnnHMOAB988AEA1asnfWi6KpgUxWbSqmB6//33Afjxxx+zvea2224DIiWAkjMvvPACAEOHDs32GjHPLFq0yK3LTqJ+8803brlJkyaAt9IZN26c23bFFVck2eNg2L9/v1sWhw6/JIX4CqYTJ07E3EukbE5KKBnHWbNmAfDAAw/k7xeIQiWrolhCWiXr//73PyD228xPuXLlsjryi/x15dtvvTNv9+zZE9FWrVo1t5xf97sgkUgPkZYyviVKlHCvOX4868D4Pn36AFCrVi1yQ9wHIVJ3ALBx40a3XKZMmSR6HRwiTcFb5ckeM96e1b9HjaZZs2aAZ/q59NJLI+7jv5fsa1WyKkoBJTSO/Dlx5MgRtywOAE8//XTENV9++aVb3rVrV0Tb5Zdf7pY/+uijdHQx5Rw6dAiAzZs3u3Xi2iarCNGar1mzxr1GJKvEDefE4cOHAc8F1E+FChUAuO+++/Lc97Awb948t2xMloI1eq/pD0a44YYbsr1Xo0aNIn5OxHEi1ahkVRRL0MmqKJZgxTK4f//+blkM83nBH7Mofq0vv/xy/juWRtatWwdA/fr1s72mQ4cOQGSKkUQiaiTWVdLB1q5d220rVaoUAK+//jrgKQBtRJa+kH1EjT9qJi9ODIkkVUs1KlkVxRICl6yzZ88GvG958NwTRbH02WefxXxOzBUNGjQAPIUMeG51gihdwHPRk9jOxo0b5+8XSAErV650yxJ/unbt2lw/t2LFCgBWrVrl1klEzYABAwD429/+5rYdO3YMgDFjxgCe8d5v6pLIGpsTrffq1QtILKJm/PjxST1DzDJ+s9fEiRMj7p1qVLIqiiUELlm3bt0KRBrjTz/9dMAz7H/66aduW8mSJQFvT3X11VcDntQAL/GySG3/3kW+WXNygcw0/vhQv5TMDRmXeEnRZeUQDzHw/1yRv3cie9ZUPctf1j2rohRwdLIqiiWkdRncpk0bIDI1iN8byY9fwSTKDYml9C81ZAkny1/h6NGjbnn58uUxnxPk1LoWLVok9ktkAPEzhcSWwXfccQfgJei68MIL3bYLLrgAgEqVKsV8Tn7nnMxBko7TRgWTmFNE0ZOTgmnx4sUpfZb/3qpgUpQCTkYyRTRs2NAtf/HFF0Dy3z5t27YFYM6cORH1kuEAPPOD4M9UsX79eiDhbBQZyXbgT3jWsWPHiLb27du75Yceegjw/HbFGcKfTjM6esnvMLF69WrAi1lt2rQpACNGjHCvEQcJ/z2TJOOZIhLJAiErsunTpwPJJ+ZO83k4milCUWwmI6Ybv1NDdqfI5RWJGBHDfrysCfIN54/pDFF+JxeRdADbtm1L+HNFihTJtk3MVl999ZVbJysccbGTNKV+d8N0mR0yQXbpQv11kicpEYnqX62JaTGRIzai9Smpwt6/jKIUMDLuFHHXXXcBniTMa9JvcbGTA4H87l7R/Pa3vwXiuyv+XJHxiOcUIbmF5NiLOnXqZKxfmSDaKSHenjWehSAacVecP3++Wyf5laLv41+JiIbZv1JJJSpZFcUSdLIqiiVkxHQTj0GDBgEwduxYIDJtZDLn4fiN+L179wbg3nvvBbwzXpIglImqo/GbCLp37w542wUxVYEXkROdEidNZHzsRHEmy1f/exSd1kV+9ismJTY1+pp4dfKzOP6AniKnKMopApOs0fi/4UTqxuubfLNJZE7fvn0B6Nevn3tNCs0zoZSs+/btAzyJ6k95OWXKlIhrmzdv7pblxLP8pn1NkIyPnWQEEWePnI7GSOT4jJwcHuIpk1J48rlKVkWxmdBIVj/Dhg0DvD3Egw8+6LaJM7pfYqSRUErWyZMnA15uqngOJuLIL9cCtGzZMl1dikdgYyfZQDp37ux1Jps9ayL7WvBMjvfffz+Qr0OnEkElq6LYjE5WRbGEUC6DQ0Sol8HdunWLaRs9ejTgJZLzRzxlmMDHzh9NlN25qvHOupETHPzL4AyPoy6DFcVmVLLmTODSIR45SVZJ4F28ePF0PT5RQjl2lqCSVVFsRiVrzoRSOkgs7/bt2wGYNm2a29apUycAatasma7HJ0oox84SVLIqis2oZM0ZlQ7Jo2OXPCpZFcVmdLIqiiWEerIuWLCAwoULx6QWVeLz3Xff0bNnTypXrkyRIkWoXr16RBJqJTHC+t4FfjBVduzcuZPbb7+dVq1asWHDhqC7E3oOHjxI06ZNqVKlCjNmzKBq1aps3749P7lrCyRhfu9yUzAFgjGmEDAf+AAoCtzqOE64vuZChjHmUeB2oJbjOEdzu16JJezvXViXwQ+TpREckduFisv1wMfAM8aY7caYtcaYkcaYwF2ZLCLU713olsHGmCuBHsDFjuOcTCR1pAJATeBcYCZwLVAZGHfq/845fE7BjvcuVJPVGFMemAp0dRxnR9D9sYxCwHdAN8dxjgMYY04HZhlj+jiO832gvQsxtrx3oZqsQB2yJMEc3zdbIcAYY44DXRzHmR5U50LOdmCTTNRTrDn1f1VAJ2v2WPHehW2y/gu4IKquF9AOaANszXiP7GEx0MwYU9hxnBOn6uSQn03BdMkarHjvQjVZHcc5BKz21xljdgHHHMdZHf9TyilGATcB44wxo8mSFKOAlx3H+SHQnoUcW967sGqDlTziOM4KsqRAPWAF8BLwJhB76I1iJaG0syqKEotKVkWxBJ2simIJOlkVxRJ0siqKJeRmuino2ifNdpA8OnbJo5kiFMVmdLIqiiXoZFUUS9DJqiiWECrfYCX17N271y1LTqG1a9cCUL58+UD6pCSHSlZFsQSVrD9zvvjiC7f8/fdZIa0nTpzI7nIlxKhkVRRLUMn6M2fZsmVuWSKsdK9qJypZFcUSQnkw1aZNmwBo0aIFAG+88YbbVrdu3Yhr9+3bB0CzZs3cOtmnyVH0+cBal7mTJ08CUKdOHbfu4MGDgDe+KRifnLB27PLC0KFD3XKDBg0AaNWqVX5vq+6GimIzOlkVxRJCo2A6ftzLoNm9e3cAvvnmGwBWrlzptkUvgwcNGgTAf/7zH7du69asZHRVq1ZNT2ct4NixY4DnAAFw1113AWlf/hYIZPs1YcIEt65hw4Zpfab+1RTFEkIjWRcvXuyWP/zww4g2UYz4EckxZ84cgIjT0t555x0AevXqlfJ+2sLq1bEZNEWyKp4bZs+eXvLHGTNmJPz5t956C4AjR464dSpZFUUBQiBZt2zZAsANN9wQ01a8eNYBaG3bto1pW79+PQDbt28H4LTTTnPb/GacgoaY4saOHQtE7tvPP//8QPoURoYPHw7Aa6+95tYlIllFt/Lee+8B8OSTT7ptpUqVSmUXY1DJqiiWoJNVUSwhsGWwKIQeeOABIDLuUnjkkUeA+CaYF198EfAUTbJkBjjnnHNS21mLkMiaV155BfAUIRC5VSioiGeXKCGrV6+ep8+L4k6WzH/4wx9S2LucUcmqKJYQmGR99dVXgcgNvtC1a1cA7r///mw/v27dOsBTqFx77bVuW8mSJVPWTxvw+3ffdtttAFSqVAko2Mq2eIwePRrwnGjGjRuXp89PmzYNgKJFiwIp8QNOGJWsimIJGY+62bNnDwDnnXce4O2xqlWr5l4ze/ZsAC666KKYz69atQqAxo0bA3D48GHA24MAtG7dOlXdtSJyZPPmzW5Z9mCdOnUCYOrUqZnqRjShGjvRbch7J2Pmd7gpVqxYrve54IKsM5dFj/L222+ntJ+n0KgbRbGZjO9Zp0yZAngSVRAjNcSXqMILL7wAeBK1bNmyQMHemz311FNuuUiRIgCMGjUq18/Jvu3jjz9260qUKAF4Wk752XZmzpwJeBJVtOSy98yNFStWALBmzRoA7rjjjhT3MHdUsiqKJehkVRRLyMgyWPx3Afr16weAMVl7aFnG1qhRw71GzDK1atUCImNd//nPf0bcu3379kDiy5mfExLvO378eLeuc+fOAFSsWDHm+gMHDgCeeUd+fvjhh91rxJlCUuM8/fTTqe52xhBlJkCXLl2AWJOWvIe5sWHDBsAzk2XSGUJQyaoolpBWyfrjjz8CnjSNxw8//AB4yab8dOzYEYCWLVu6df6MEOBliiiILFy4EIDChQu7ddGKpV27drnlSy65BIBu3boBMHDgQABOP/1095pok5jNjBgxwi2LBBUTXzzHmf379wPeeMjKA2D+/PkR9wlifFSyKoolpNUpYvfu3UCkY71E1ieyV5C+5XTt119/DUQ6VaSQUBn2hUOHDgGeYV72qQBjxowBYMmSJQD86U9/ctsk9rJdu3ZA4vu1JAl87ETnAV78sxzOFc8kJboRkbDffvttbMdOvZMVKlQAoEePHm6bpM4V54p69eol23V1ilAUm9HJqiiWkNZl8LZt24BIs4zEsaZqGXzvvfcCMHLkyKT7mQOBL+XiIeYVURT5042KCUt8hGfNmuW2/f73v4+4j2xJRMkHnmkjBQQ2dnLigCx5wYtjzeldkgiaKlWqAJ43GMDzzz8PeEnnREE1b9489xrxbrrxxhsBL7IsCXQZrCg2k1bTjThD+J0aohE/YL+SRLJG+M8RyQ6R3gUJUR6JQ4hIAoD69esD0Lt3bwDatGkT83nJdiAJqh977LH0dTYARNkoEhZg+fLlQKwSKCc2btzolidOnAh4sdaiPPKbh9KNSlZFsYS0Slb5hrvpppvcusqVKwOeo8NVV10FRBr2BYkGWbRoUUzbkCFDAC9ec8GCBW5b8+bN89v1UCN7IxnLYcOGuW0iDZYuXQpExmtOnjwZ8LIdSDrNcuXKpbfDAXH22WfHLSeKP044zWauhFDJqiiWEMrzWWV/Ie5x/m81cTrv378/4Elk/2FL8aR0koRSG/z3v/8dgA4dOsS0iQZTVi7+wIfrr78e8BKApzkpdSjHLi/4tbmiUxFHnzSvRlQbrCg2o5NVUSwhNMtgMVqDp5B64403gMhlraTXyNC5LaFcyokzg/j6+k0v8ve8++67AS9xGkCjRo3S1aV4hHLs8oJEIAEsW7YMgBMnTmTi0boMVhSbCfwUOWHSpElu+c033wQ8xVLfvn3dNj0JzXMplONFJAIE4KGHHgKgdOnSQMal6c8K/9mruaxAM4JKVkWxhMD3rOLY73c3lL2qxGvKPhXSfwZmFNbvuwLE2rHbt28fEOlIIYERK1euzEQXdM+qKDajk1VRLCFwBZOczypLXz/iy5rhpa9SwJFzcSThH0SmxwkKlayKYgmBS9bvvvsu27aCfIK5Ehz+CC6hdu3aAfQkEpWsimIJgZtuQo615ocQoGOXPGq6URSb0cmqKJagk1VRLEEnq6JYQign69y5c6lbty5FihShWrVqVp8RmilGjhxJ48aNKVu2LGXKlKFJkyYRCaiV7LFl7EI3WT///HOuu+46WrduzfLlyxk8eDADBgxw87Yq8VmwYAFdu3Zl4cKFfPbZZzRq1Ih27drxySefBN210GPL2OVmusk4xpjpQDXHcS711Y0EbnAcp3pwPbMPY8wqYL7jOPcF3RfbCOPYhU6yApcB0WuQeUA1Y0zek78WUIwxhYBSQPYuYkpcwjp2YZyslYAdUXU7fG1KYgwAygCvBN0RCwnl2AXuG5xHwrVmDynGmF5kvXC/dxwn9kRgJVvCPHZhlKzbgYpRdWed+j9a4ipRGGP6ASPJetk+CLo/NhH2sQvjZP0EuDqqrjWwOWzfdGHDGPMY8AjQJowvW5ixYezCuAx+BlhijBlK1p6hAdAH+L9AexVyjDGjgbuAW4B1xhhZnRx2HGdfcD0LP7aMXehMNwDGmLbAE8B5ZC19xziOo54ROWCMye4POcVxnDsy2RfbsGXsQjlZFUWJJYx7VkVR4qCTVVEsQSeroliCTlZFsYTcTDcFXfukeYSSR8cueTQHk6LYjE5WRbEEnayKYgk6WRXFEnSyKool6GRVFEvQyaoolqCTVVEsISPxrKtWrXLLvXv3BuDCCy8EoGLFrNBB/9GPcohtvCMfq1fPSnDYpk0bAMqUKQOAMfmxwdvF1q1bAeKmypw1axYAN954IwDz589326ZMmRJxbbly5QAYO3asW3fzzTentrNKylDJqiiWkJEjH48fP+6W33//fQAmT54MwOrVqwFYu3Zt9p3w9TFagnbu3BmIPEa+adOm+euwR6hc5rZt2wbARRddBMDevXtz70QOYxePcePGAdCjR49kuugnVGNnGepuqCg2o5NVUSwh8JPPRZn07bde4sKXXnop4poFCxa45c8//zzufYoXL+6W586dC8Dll1+e3+4FvpQ7dOiQW65Tpw4AW7ZsAeIva4sWLQrAlVdemdUJ39934cKFABw9ejTb5w0dOhSAv/zlL/npNoRg7BLBPxYyVvL/aaed5rb94hcZzS2oy2BFsZnAU5GKRPzNb37j1j3++OMA1K9fH4A1a9a4bfLNf8sttwDwu9/9DoAffvjBvaZFixYADBs2DID77gvN2UJ5ZsaMGW5ZTDY5UblyZQDmzJkDREqO5557DoB+/fqlsotWIIpNMV+de+65ALz44ovuNTJW8i41btzYbWvQoAHgvVNFihRJc49jUcmqKJYQuGQVfvrpJ7cs3/wrV64EIvdd//73vwHo379/xDXdu3d3r3n33XcBePDBBwHvWxFSso/NKF9++WWert+zZw8ATz75JADLli1z2woVKrjfzb/61a8ifm7SpAkAzZs3d+vEeefTTz8FYOrUqW7bkiVLAJg9ezbgmRpFR5AJCu5fT1EsQyerolhC4KabHTuyDoZ74okn3Lrx48dHXOP3SHrmmWcAqFu3bsQ1GzZscMuy1N21axcQadYRZVU8v+M4BG5+2L9/v1suW7YsACdPngQSW9b6x062B+3btwci/YYFUeDJNiMfBD52+UXeTYBHHnkEgL/+9a+AN4avv/56Oh6tphtFsZnAFEwiHQYMGADERoSAZ4ieNGmSW1ejRo249xNVPEDPnj0BePTRRwHP8QLg9ttvBzwpk0kFQTKULFnSLYty46mnngI8pYefa665BoCqVasCMGrUKLft2LFjgCcx4jlVFKTopdyQiDDwJKlI1iDGSSWrolhCxvesYqIRR4Xo/SnAGWecAcCiRYsAz80uUb7//nsALrvsMgD++9//xlzzzjvvANC6deucbhXKfdfBgwcB6NWrFwAtW7Z028RMdd5558V87pVXXgHgj3/8Y7b3FtOP/A3yQSjHLi+cOHHCLd96660AvPbaa4BnGkuTg4nuWRXFZjIezyoSVeImhVq1arnlDz7IOiVeXOeSZfHixQA0a9Yspu2xxx4DYODAgTndwnrpIE4kAFdccQUQuYcH+OUvf+mWd+7cmapHh2rsJPZXMotE/xwP/35fAhtkxSHWB8m2kWJUsiqKzehkVRRLyIjp5p577nHLEvkhSOKz6dOnu3WlSpXK1/N2794NeMnDCjJDhgxxy9ktf7OLEbYNSRUkikn52Y9s++KZXiRdjmwXxLzn/5zECadp+ZsjKlkVxRLSIlnFPCOmggkTJsRc06FDB8CL1/RH5eeXr776CohVYvlp1apVyp6XX/xxqtHpRf0mFHF4SIThw4cDniMFxLondurUCYiNSLEJv/SUpHnt2rUDIl0BL730UsBzpxQFkT8Th4x9vGgvcW/1x79mGpWsimIJaZGsI0aMAGDQoEFA5P5AVOUibVMpUYVNmzbFPFeQuNeLL7445c9NljFjxrjl0aNHR7QVLlzYLZ999tmAF2dZr149IHIMDxw4AHh/A780lfGoUKECAH379o3piyRbX79+PRAZMFGsWLHEf6kMsXz5crcsv9e0adMAKFGiRMz1ktBc9u8S8wyxqxp/sMeKFSsAL3uEmHJuuukm9xq/a2g6UMmqKJagk1VRLCFlHkz+uMtq1aoBsG/fPiBy+SRLDVGTpwpR1wO0bdsWiDVVgBfPGs93Ng4Z8cLxL3UTieaQv5mYGPyRQ0eOHAG88YiXkV+UVhLp5Pedfv755wHYuHEj4CWtAy+ySaKZsouAksfl+otkT8Jjd+2117plSUH77LPPAnD99de7bfLeye8naVn8MatXXXUV4MWu+pfB3bp1A7wYYPEb9qeFkUR/8m77k9VNnDgx4hmXXHJJTr+WejApis2kTLKKcwPAe++9F9HWtWtXt5xq1beo3v3+v5JkTCTJ4MGD3TaJn00weVhGpMOZZ57plv0pVbO9cQ6G/eyuzev1iVzr9/mOQ0bGThQ/4EUT+etibnzq95OY5zvvvNNti84+Eg8xhd19991ApC91XsbOH9ETB5WsimIzKZOs8UwEwubNm92ymB/yi0jUq6++GoClS5fGXFO7dm0g8nzYPJIR6fDqq6+6ZYmbzPHGAUlWcU+UPWHHjh1zulXGo25ERxHPfbJKlSoA1KxZMx/d8pBVhf+ol48++giIP3aSFFxMRbn0QyWrothMRiSraCgh/04Q8u0le45169bFXCPf+KKBK126dLKPy4h08GtjGzZsCERq16PJS3ZDudZ/vZw+L9LGj7wPEnyRjxxVoYpntQyVrIpiMzpZFcUSUrYMlkgHiIwDBG/ZBV6qDEkzKs/3L+mkTtTbXbp0cdveeustwDM4y5Lbr4IX43T58uUT7X52ZHwpN2/ePCByPGNunKSCSdKwjhw5EohM55IGdBmcPLoMVhSbyYi7YTzkW3779u1AZEylKKTkjFFJbgWxShVxwPCn40whGZcOhw8fBryoDv/ZtKJcS0Syynm3/tP1+vTpA0S6N6YRlazJo5JVUWwmLalIxaVQpENOEjYR/AdLSVJlMc+IBEnT2aOBSwf/ubUynpKBQ1wT/eYVcSL/xz/+AaR9X5oTgY+dxahkVRSb0cmqKJaQ1oz84pM7c+ZMt27YsGG5fk4SX0k8oShGIF/eSMkQyqWcJFiTU+T8/tZyvk8ICOXYWYIugxXFZgI/+TzkqHRIHh275FHJqig2o5NVUSxBJ6uiWIJOVkWxBJ2simIJOlkVxRJ0siqKJehkVRRLyM0pQlGUkKCSVVEsQSeroliCTlZFsQSdrIpiCTpZFcUSdLIqiiX8PzEIYL5zLomgAAAAAElFTkSuQmCC
+" />
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We must modify our sequential model to first <em>flatten</em> the 28x28 images that we just loaded. Also, we <strong>must output in the final layer 10 activations</strong></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">simple_net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+    <span class="n">Flatten</span><span class="p">(),</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">28</span><span class="o">*</span><span class="mi">28</span><span class="p">,</span><span class="mi">30</span><span class="p">),</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Also, we must <strong>change our loss function and our definition of accuracy now that we have a multi-class problem</strong></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Learner</span><span class="p">():</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataloaders</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">opt</span><span class="p">,</span> <span class="n">loss</span><span class="p">):</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">train_dl</span> <span class="o">=</span> <span class="n">dataloaders</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">valid_dl</span> <span class="o">=</span> <span class="n">dataloaders</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">opt</span> <span class="o">=</span> <span class="n">opt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loss</span> <span class="o">=</span> <span class="n">loss</span>
+        
+    <span class="k">def</span> <span class="nf">train_epoch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                
+        <span class="k">for</span> <span class="n">xb</span><span class="p">,</span><span class="n">yb</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_dl</span><span class="p">:</span>
+            <span class="n">preds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">xb</span><span class="p">)</span>
+            <span class="n">calculated_loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">yb</span><span class="o">.</span><span class="n">long</span><span class="p">())</span>
+            <span class="n">calculated_loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">opt</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">opt</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+            
+            
+    <span class="k">def</span> <span class="nf">batch_accuracy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preds</span><span class="p">,</span> <span class="n">yb</span><span class="p">):</span>
+        
+        <span class="n">probs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">winners</span> <span class="o">=</span> <span class="n">probs</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">corrects</span> <span class="o">=</span> <span class="p">(</span><span class="n">winners</span> <span class="o">==</span> <span class="n">yb</span><span class="p">)</span>
+        <span class="n">accuracy</span> <span class="o">=</span> <span class="n">corrects</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">float</span><span class="p">()</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span> <span class="n">yb</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">)</span>
+        <span class="k">return</span> <span class="n">accuracy</span>
+
+        
+    <span class="k">def</span> <span class="nf">validate_epoch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        
+        <span class="n">accs</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_accuracy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">xb</span><span class="p">),</span> <span class="n">yb</span><span class="p">)</span> <span class="k">for</span> <span class="n">xb</span><span class="p">,</span><span class="n">yb</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_dl</span><span class="p">]</span>
+        <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">accs</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="mi">4</span><span class="p">)</span>
+                            
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        
+        <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">train_epoch</span><span class="p">()</span>
+            <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">validate_epoch</span><span class="p">(),</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mnist_learner</span> <span class="o">=</span> <span class="n">Learner</span><span class="p">(</span><span class="n">dls</span><span class="p">,</span> <span class="n">simple_net</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">),</span> <span class="n">SGD</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">())</span>
+<span class="n">mnist_learner</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>0.9179 0.9398 0.9487 0.9538 0.9584 0.9602 0.9606 0.9635 0.9645 0.9664 </pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>96% accuracy! not that bad for such a simple model.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><a class="u-url" href="/dilettanting-deep-learning/2020/06/23/Fastbook-Chapter-4.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/dilettanting-deep-learning/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/dilettanting-deep-learning/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/dilettanting-deep-learning/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Having fun with deep learning</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/David-Salazar" title="David-Salazar"><svg class="svg-icon grey"><use xlink:href="/dilettanting-deep-learning/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/DavidSalazarVir" title="DavidSalazarVir"><svg class="svg-icon grey"><use xlink:href="/dilettanting-deep-learning/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
